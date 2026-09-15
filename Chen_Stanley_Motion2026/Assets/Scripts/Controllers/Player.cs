@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     public Vector3 bombOffsetDistance;
     public float moveDistance;
 
+    //public float for task 2 -> Spawns bombs in a random corner around the player in a specified distance
+    public float inDistance;
+
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -33,6 +36,12 @@ public class Player : MonoBehaviour
    
             playerTransform.position = MoveTowardsEnemy(playerTransform.position, enemyTransform.position);
         }
+
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+
+            SpawnBombOnRandomCorner(inDistance);
+        }
     }
 
     public void SpawnBombAtOffset(Vector3 inOffset)
@@ -51,5 +60,51 @@ public class Player : MonoBehaviour
         Vector2 newPlayerPos = new Vector2(playerPos.x + normalizedDirectionVector.x, playerPos.y + normalizedDirectionVector.y);
         return newPlayerPos;
 
+    }
+
+    public void SpawnBombOnRandomCorner(float inDistance)
+    {
+        //Using random range to get 4 different integers 
+        //Use an if condition that leads to different outcomes depending on the generated integer 
+        //Different outcomes spawn a bomb in each of the different corners around the player
+        //Distance of corners is multiplied by inDistance
+        int randomCorner = Random.Range(1, 5);
+        Debug.Log(randomCorner);
+
+        //top left
+        Vector2 topLeft = new Vector2(transform.position.x - inDistance, transform.position.y + inDistance);
+        //top right
+        Vector2 topRight = new Vector2(transform.position.x + inDistance, transform.position.y + inDistance);
+
+        //bottom left
+        Vector2 bottomLeft = new Vector2(transform.position.x - inDistance, transform.position.y - inDistance);
+
+        //bottom right
+        Vector2 bottomRight = new Vector2(transform.position.x + inDistance, transform.position.y - inDistance);
+
+
+        if (randomCorner == 1)
+        {
+            Instantiate(bombPrefab, topLeft, Quaternion.identity);
+        }
+        else if (randomCorner == 2)
+        {
+            Instantiate(bombPrefab, topRight, Quaternion.identity);
+
+        }
+        else if (randomCorner == 3)
+        {
+            Instantiate(bombPrefab, bottomLeft, Quaternion.identity);
+
+        }
+        else if (randomCorner == 4)
+        {
+            Instantiate(bombPrefab, bottomRight, Quaternion.identity);
+
+        }
+        else
+        {
+            Debug.Log("Error");
+        }
     }
 }
