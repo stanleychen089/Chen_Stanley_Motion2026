@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     //public float for task 2 -> Spawns bombs in a random corner around the player in a specified distance
     public float inDistance;
 
+    //public float for task 3 -> ratio of distance that warps player to target
+    public float ratioDistance;
+
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -42,6 +45,11 @@ public class Player : MonoBehaviour
 
             SpawnBombOnRandomCorner(inDistance);
         }
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            WarpPlayer(enemyTransform, ratioDistance);
+        }
     }
 
     public void SpawnBombAtOffset(Vector3 inOffset)
@@ -50,7 +58,7 @@ public class Player : MonoBehaviour
         Instantiate(bombPrefab, bombInstantiateLoco, Quaternion.identity);
     }
 
-   public static Vector2 MoveTowardsEnemy(Vector3 playerPos, Vector3 targetPos)
+    public static Vector2 MoveTowardsEnemy(Vector3 playerPos, Vector3 targetPos)
     {
         //To find the direction vector between the enemy and player, subtract the end point from start point
         Vector3 directionVector = new Vector3(targetPos.x - playerPos.x, targetPos.y - playerPos.y);
@@ -106,5 +114,11 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Error");
         }
+
+    }
+    public void WarpPlayer(Transform target, float ratio)
+    {
+        //adjust the player position towards target by a ratio
+        transform.position = Vector2.Lerp(transform.position,target.position,ratio);
     }
 }
