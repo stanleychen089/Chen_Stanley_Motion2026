@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     //public float for task 3 -> ratio of distance that warps player to target
     public float ratioDistance;
 
+    //public float and list for task 4 
+    public float inMaxRange = 0;
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -119,6 +122,18 @@ public class Player : MonoBehaviour
     public void WarpPlayer(Transform target, float ratio)
     {
         //adjust the player position towards target by a ratio
-        transform.position = Vector2.Lerp(transform.position,target.position,ratio);
+        //transform.position = Vector2.Lerp(transform.position,target.position,ratio);
+
+        //An attempt to warp the player without using lerp
+        Vector3 directionVector = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y);
+        Vector3 newPlayerPos = new Vector3(transform.position.x + directionVector.x * ratio, transform.position.y + directionVector.y * ratio);
+        transform.position = newPlayerPos;
+        
     }
+
+    public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
+    {
+
+    }
+
 }
