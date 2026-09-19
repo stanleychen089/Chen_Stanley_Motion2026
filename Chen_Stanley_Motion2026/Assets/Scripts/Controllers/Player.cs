@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     //public float and list for task 4 
     public float inMaxRange = 0;
+
+    //Public variables by default
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -52,6 +54,11 @@ public class Player : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             WarpPlayer(enemyTransform, ratioDistance);
+        }
+
+        if (Keyboard.current.fKey.wasPressedThisFrame)
+        {
+            DetectAsteroids(inMaxRange, asteroidTransforms);
         }
     }
 
@@ -133,7 +140,18 @@ public class Player : MonoBehaviour
 
     public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
     {
-
+        for (int i = 0; i < inAsteroids.Count; i++)
+        {
+            float distance = Vector2.Distance(transform.position, inAsteroids[i].position);
+         
+            if (distance < inMaxRange)
+            {
+                Vector3 directionVector = new Vector3(inAsteroids[i].position.x - transform.position.x, inAsteroids[i].position.y - transform.position.y);
+                Vector3 normalizedVector = Vector3.Normalize(directionVector);
+               
+                Debug.DrawLine(transform.position, transform.position+normalizedVector, Color.green, 10);
+            }
+        }
     }
 
 }
