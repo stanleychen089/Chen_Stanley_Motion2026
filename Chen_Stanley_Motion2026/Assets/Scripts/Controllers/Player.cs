@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     public Vector3 bombOffsetDistance;
     public float moveDistance;
 
+    //public float for task 1 -> Bomb Trail
+    public float bombSpace;
+    public int numberOfBombs;
+
     //public float for task 2 -> Spawns bombs in a random corner around the player in a specified distance
     public float inDistance;
 
@@ -59,6 +63,21 @@ public class Player : MonoBehaviour
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             DetectAsteroids(inMaxRange, asteroidTransforms);
+        }
+
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            SpawnBombTrail(bombSpace, numberOfBombs);
+        }
+    }
+
+    public void SpawnBombTrail(float inBombSpacing, int inNumberOfBombs)
+    {
+        for (int i = 0; i < inNumberOfBombs; i++)
+        {
+            Vector3 bombOffset = new Vector3(transform.position.x, transform.position.y - inBombSpacing*(i + 1));
+            Instantiate(bombPrefab, bombOffset, Quaternion.identity);
+
         }
     }
 
