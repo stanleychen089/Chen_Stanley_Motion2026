@@ -31,6 +31,18 @@ public class Player : MonoBehaviour
     public GameObject bombPrefab;
     public Transform bombsTransform;
 
+    //week 3 lecture
+    public Vector3 currentVelocity = Vector3.right;
+    public float speed;
+
+    //Lesson on Acceleration
+    public float accelerationTime; //desired time to reach max speed
+    public float acclerationRate; //the rate of acceleration calculated by accelerationTime / max speed
+    public float maxSpeed; //max speed
+
+    public float decelerationTime; //desired time to reach 0 speed from max speed
+    public float decelerationRate; //the rate of deceleration calculated by declerationTime / current velocity 
+
     void Update()
     {
         if (Keyboard.current.bKey.wasPressedThisFrame)
@@ -42,8 +54,8 @@ public class Player : MonoBehaviour
             SpawnBombAtOffset(playerTransform.position);
 
         }
-
-        if (Keyboard.current.wKey.wasPressedThisFrame)
+        
+        if (Keyboard.current.gKey.wasPressedThisFrame)
         {
    
             playerTransform.position = MoveTowardsEnemy(playerTransform.position, enemyTransform.position);
@@ -60,15 +72,16 @@ public class Player : MonoBehaviour
             WarpPlayer(enemyTransform, ratioDistance);
         }
 
-        if (Keyboard.current.fKey.wasPressedThisFrame)
-        {
-            DetectAsteroids(inMaxRange, asteroidTransforms);
-        }
+        DetectAsteroids(inMaxRange, asteroidTransforms);
 
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
             SpawnBombTrail(bombSpace, numberOfBombs);
         }
+
+        //week 3
+        PlayerMovement();
+
     }
 
     public void SpawnBombTrail(float inBombSpacing, int inNumberOfBombs)
@@ -168,9 +181,69 @@ public class Player : MonoBehaviour
                 Vector3 directionVector = new Vector3(inAsteroids[i].position.x - transform.position.x, inAsteroids[i].position.y - transform.position.y);
                 Vector3 normalizedVector = Vector3.Normalize(directionVector);
                
-                Debug.DrawLine(transform.position, transform.position+normalizedVector, Color.green, 10);
+                Debug.DrawLine(transform.position, transform.position+normalizedVector, Color.green, 0.001f);
             }
         }
+    }
+
+    public void PlayerMovement()
+    {
+        Vector3 accelerationDirection = Vector3.zero;
+
+        //foruma for desired acceleration = max speed / time to get to max speed (AKA acceleration time)
+
+        acclerationRate = maxSpeed / accelerationTime;
+
+        decelerationRate = maxSpeed / decelerationTime;
+
+        //Week 3 - Player movement 
+        if (Keyboard.current.upArrowKey.isPressed)
+        {
+            accelerationDirection = Vector3.up;
+        }
+        if (Keyboard.current.leftArrowKey.isPressed)
+        {
+            accelerationDirection = Vector3.left;
+        }
+        if (Keyboard.current.downArrowKey.isPressed)
+        {
+            accelerationDirection = Vector3.down;
+        }
+        if (Keyboard.current.rightArrowKey.isPressed)
+        {
+            accelerationDirection = Vector3.right;
+        }
+
+        //Increase currentVelocity by itself and currentAcceleration over time 
+        //For some reason, we want to normalize the currentAcceleration
+        currentVelocity += accelerationDirection.normalized * acclerationRate * Time.deltaTime;
+
+        //if conditions that cap out velocity in any direction to the max speed
+        if (currentVelocity.magnitude > maxSpeed)
+        {
+            currentVelocity = currentVelocity.normalized * maxSpeed; 
+        }
+
+        //Deceleration
+        if (!Keyboard.current.upArrowKey.isPressed && !Keyboard.current.leftArrowKey.isPressed && 
+            !Keyboard.current.downArrowKey.isPressed && !Keyboard.current.rightArrowKey.isPressed)
+        {
+            currentVelocity -= currentVelocity.normalized * decelerationRate * Time.deltaTime;
+            if(currentVelocity.magnitude < 0)
+            {
+                currentVelocity = Vector3.zero;
+            }
+        }
+       
+
+        //Moves player position by the changing velocity over time
+        //Not normalized, as that would cause the player to move the same speed no matter the changing velocity (AKA acceleration)
+        transform.position = transform.position + currentVelocity * Time.deltaTime;
+
+        
+
+        //Debug to check if velocity is reaching desired velocity at desired time
+        Debug.Log(currentVelocity);
     }
 
 }
