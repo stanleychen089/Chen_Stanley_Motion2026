@@ -199,19 +199,19 @@ public class Player : MonoBehaviour
         //Week 3 - Player movement 
         if (Keyboard.current.upArrowKey.isPressed)
         {
-            accelerationDirection = Vector3.up;
+            accelerationDirection += Vector3.up;
         }
         if (Keyboard.current.leftArrowKey.isPressed)
         {
-            accelerationDirection = Vector3.left;
+            accelerationDirection += Vector3.left;
         }
         if (Keyboard.current.downArrowKey.isPressed)
         {
-            accelerationDirection = Vector3.down;
+            accelerationDirection += Vector3.down;
         }
         if (Keyboard.current.rightArrowKey.isPressed)
         {
-            accelerationDirection = Vector3.right;
+            accelerationDirection += Vector3.right;
         }
 
         //Increase currentVelocity by itself and currentAcceleration over time 
