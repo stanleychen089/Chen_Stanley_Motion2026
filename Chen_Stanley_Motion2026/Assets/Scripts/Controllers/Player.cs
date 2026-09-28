@@ -43,6 +43,12 @@ public class Player : MonoBehaviour
     public float decelerationTime; //desired time to reach 0 speed from max speed
     public float decelerationRate; //the rate of deceleration calculated by declerationTime / current velocity 
 
+    //Lesson on Trigonometry
+    public float radarRadius;//The size of the radar... duh
+    public int numberOfCirclePoly; //The amount of sides of the circle 
+
+
+
     void Update()
     {
         if (Keyboard.current.bKey.wasPressedThisFrame)
@@ -81,6 +87,27 @@ public class Player : MonoBehaviour
 
         //week 3
         PlayerMovement();
+        //week 4
+        playerRadar(radarRadius, numberOfCirclePoly);
+
+    }
+    public void playerRadar(float radius, int circlePoints)
+    {
+       
+
+        for (int i = 0; i < circlePoints; i++)
+        {
+            float radiansBetweenPoints = 2 * Mathf.PI / circlePoints;
+            float nextPointX = Mathf.Cos(radiansBetweenPoints);
+            float nextPointY = Mathf.Sin(radiansBetweenPoints);
+            Vector3 currentPoint = new Vector3(nextPointX, nextPointY) * i + transform.position;
+            Vector3 nextPoint = new Vector3(nextPointX, nextPointY) * (i+1) + transform.position;
+            Debug.DrawLine(currentPoint, nextPoint);
+
+
+        }
+
+        
 
     }
 
