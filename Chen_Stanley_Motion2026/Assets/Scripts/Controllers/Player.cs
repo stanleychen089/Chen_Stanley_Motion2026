@@ -93,16 +93,30 @@ public class Player : MonoBehaviour
     }
     public void playerRadar(float radius, int circlePoints)
     {
-       
+        Color radarColor; 
+
+        
 
         for (int i = 0; i < circlePoints; i++)
         {
-            float radiansBetweenPoints = 2 * Mathf.PI / circlePoints;
-            float nextPointX = Mathf.Cos(radiansBetweenPoints);
-            float nextPointY = Mathf.Sin(radiansBetweenPoints);
-            Vector3 currentPoint = new Vector3(nextPointX, nextPointY) * i + transform.position;
-            Vector3 nextPoint = new Vector3(nextPointX, nextPointY) * (i+1) + transform.position;
-            Debug.DrawLine(currentPoint, nextPoint);
+            //Radian length of current length from 0 
+            float currentRadian = 2 * Mathf.PI * i / circlePoints;
+            //Radian length of radian from current point to next point 
+            float nextRadian = 2 * Mathf.PI * (i + 1) / circlePoints;
+
+            //coordinates of next point
+            float nextPointX = Mathf.Cos(nextRadian);
+            float nextPointY = Mathf.Sin(nextRadian);
+            Vector3 nextPoint = new Vector3(nextPointX, nextPointY) * radius + transform.position;
+
+            //coordinates of current point  
+            float currentPointX = Mathf.Cos(currentRadian);
+            float currentPointY = Mathf.Sin(currentRadian);
+            Vector3 currentPoint = new Vector3(currentPointX, currentPointY) * radius + transform.position;
+
+            //drawline from current point to next point
+            Debug.DrawLine(currentPoint, nextPoint, Color.green);
+            
 
 
         }
