@@ -319,7 +319,7 @@ public class Player : MonoBehaviour
         
 
         //Debug to check if velocity is reaching desired velocity at desired time
-        Debug.Log(currentVelocity);
+        //Debug.Log(currentVelocity);
     }
 
 }
