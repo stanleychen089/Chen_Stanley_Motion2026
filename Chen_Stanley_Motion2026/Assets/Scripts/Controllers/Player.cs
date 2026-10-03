@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Claims;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -46,6 +47,9 @@ public class Player : MonoBehaviour
     //Lesson on Trigonometry
     public float radarRadius;//The size of the radar... duh
     public int numberOfCirclePoly; //The amount of sides of the circle 
+    public float powerUpSpawnRadius;
+    public int amountOfPowerups;
+    public GameObject powerUpPrefabs;
 
 
 
@@ -90,6 +94,28 @@ public class Player : MonoBehaviour
         //week 4
         playerRadar(radarRadius, numberOfCirclePoly);
 
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            spawnPowerUps(powerUpSpawnRadius, amountOfPowerups);
+        }
+
+    }
+
+    public void spawnPowerUps(float radius, int powerUpsAmount)
+    {
+        //loops of spawning power ups ; spawning based on amount 
+        for (int i = 0; i < powerUpsAmount; i++)
+        {
+            //calculating radian to determine X and Y coordinates of spawn point; radian based on current loop
+            float radian = 2 * Mathf.PI * i / powerUpsAmount;
+            //spawnPoint X and Y as seperate lines of code to make vector3 line shorter and clearer
+            float spawnPointX = Mathf.Cos(radian);
+            float spawnPointY = Mathf.Sin(radian);
+            //spawn point vector 
+            Vector3 spawnPoint = new Vector3(spawnPointX, spawnPointY) * radius + transform.position;
+            //instantiate line
+            Instantiate(powerUpPrefabs, spawnPoint, Quaternion.identity);
+        }
     }
     public void playerRadar(float radius, int circlePoints)
     {
