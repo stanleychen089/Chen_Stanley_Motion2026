@@ -93,7 +93,16 @@ public class Player : MonoBehaviour
     }
     public void playerRadar(float radius, int circlePoints)
     {
-        Color radarColor; 
+        Color radarColor;
+        float distance = Vector2.Distance(transform.position, enemyTransform.position);
+        if (distance < radius)
+        {
+            radarColor = Color.red;
+        }
+        else
+        {
+            radarColor = Color.green;
+        }
 
         
 
@@ -115,7 +124,7 @@ public class Player : MonoBehaviour
             Vector3 currentPoint = new Vector3(currentPointX, currentPointY) * radius + transform.position;
 
             //drawline from current point to next point
-            Debug.DrawLine(currentPoint, nextPoint, Color.green);
+            Debug.DrawLine(currentPoint, nextPoint, radarColor);
             
 
 
