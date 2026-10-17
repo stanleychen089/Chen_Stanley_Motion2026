@@ -21,7 +21,8 @@ public class PlanetMechanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WithinOrbitRadius();
+        //WithinOrbitRadius();
+        PlanetaryOrbit();
     }
 
     public void WithinOrbitRadius()
@@ -30,14 +31,8 @@ public class PlanetMechanic : MonoBehaviour
         if (distance < orbitRadius)
         {
             PlanetaryOrbit();
-            enteredOrbit = true;
-            pullDistance -= pullSpeed * Time.deltaTime;
         }
-        else
-        {
-            pullDistance = orbitRadius;
-            enteredOrbit = false;
-        }
+        
 
         
     }

@@ -75,7 +75,7 @@ public class FinalPlayer : MonoBehaviour
         if (isBoosting)
         {
             boosterTime -= Time.deltaTime;
-            if(boosterTime < 0)
+            if(boosterTime <= 0)
             {
                 boosterTime = 0;
                 isBoosting = false;
@@ -83,14 +83,14 @@ public class FinalPlayer : MonoBehaviour
         }
 
         //if boosting is not happening, start decelerating 
-        if(!isBoosting)
-        {
-            currentVelocity -= currentVelocity.normalized * decelerationRate * Time.deltaTime;
-            if(currentVelocity.magnitude < 0)
-            {
-                currentVelocity = currentVelocity.normalized * 0; 
-            }
-        }
+        //if(!isBoosting)
+        //{
+        //    currentVelocity -= currentVelocity.normalized * decelerationRate * Time.deltaTime;
+        //    if(currentVelocity.magnitude <= 0)
+        //    {
+        //        currentVelocity = currentVelocity.normalized * 0; 
+        //    }
+        //}
     }
     public void PlayerRotation()
     {
