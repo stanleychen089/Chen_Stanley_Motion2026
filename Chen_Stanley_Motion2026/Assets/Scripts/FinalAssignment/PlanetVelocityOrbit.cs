@@ -12,11 +12,16 @@ public class PlanetVelocityOrbit : MonoBehaviour
     //Starting planet variables
     public float orbitSpeed;
     public bool isEarth;
-    private float angleOfOrbit; 
+    private float angleOfOrbit;
+
+    //End planet variables
+    public bool isEnd;
+    public bool youWin;
 
     void Start()
     {
         player = playerTransform.GetComponent<FinalPlayer>();
+        youWin = false;
     }
 
     // Update is called once per frame
@@ -32,6 +37,9 @@ public class PlanetVelocityOrbit : MonoBehaviour
             }
         }
 
+      
+
+        //Calculating player distance away from planet to see if the player is within the planet's orbit radius 
         float distance = Vector3.Distance(playerTransform.position, transform.position);
         if (distance < orbitRadius)
         {
@@ -41,7 +49,39 @@ public class PlanetVelocityOrbit : MonoBehaviour
             player.currentVelocity += directionVector * orbitStrength * Time.deltaTime;
         }
 
-        
+        //End condition that triggers if player enters the orbit of the destination planet 
+        if (isEnd && distance <= orbitRadius)
+        {
+            youWin = true;
+
+        }
+
+        if (youWin)
+        {
+            EndOrbit();
+        }
+
+    }
+
+    void EndOrbit()
+    {
+
+        Vector3 directionVector = playerTransform.position - transform.position;
+        //Starting angle will be set to wherever the player enters the orbit from 
+        float angleOfOrbit = Mathf.Atan2(directionVector.y, directionVector.x) * Mathf.Rad2Deg;
+        //angleOfOrbit = Deg -> Manipulate speed by degrees 
+
+        angleOfOrbit += orbitSpeed * Time.deltaTime;
+
+        float radOfOrbit = angleOfOrbit * Mathf.Deg2Rad;
+
+        float pointOfOrbitX = Mathf.Cos(radOfOrbit);
+        float pointOfOrbitY = Mathf.Sin(radOfOrbit);
+        Vector3 pointOfOrbit = new Vector3(pointOfOrbitX, pointOfOrbitY) * orbitRadius + transform.position;
+
+        playerTransform.position = pointOfOrbit;
+
+        Debug.Log(angleOfOrbit);
     }
 
     void EarthOrbit()

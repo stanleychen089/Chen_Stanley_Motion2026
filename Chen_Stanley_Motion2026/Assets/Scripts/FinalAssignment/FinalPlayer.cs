@@ -82,13 +82,13 @@ public class FinalPlayer : MonoBehaviour
             }
         }
 
-        //if boosting is not happening, start decelerating 
-        //if(!isBoosting)
+        //if boosting is not happening, start decelerating
+        //if (!isBoosting)
         //{
         //    currentVelocity -= currentVelocity.normalized * decelerationRate * Time.deltaTime;
-        //    if(currentVelocity.magnitude <= 0)
+        //    if (currentVelocity.magnitude <= 0)
         //    {
-        //        currentVelocity = currentVelocity.normalized * 0; 
+        //        currentVelocity = currentVelocity.normalized * 0;
         //    }
         //}
     }
