@@ -8,6 +8,8 @@ public class GunshipController : MonoBehaviour
 
     public GameObject cannonballPrefab;
     public float cannonballForce = 150f;
+    public Color cannonLineColor;
+    public float drawLineDistance;
 
     void Update()
     {
@@ -28,6 +30,25 @@ public class GunshipController : MonoBehaviour
         {
             FireCannon(rightCannon);
         }
+
+        //raycasting exericse
+        //RaycastHit2D stores information about the object the ray hits
+        //Physics2D.Raycast casts the ray from current position in the set direction
+        RaycastHit2D leftHit = Physics2D.Raycast(leftCannon.position, leftDirection);
+
+        //if the ray hits something,the variable will not be null
+        //We only want the if-condition to trigger if the object the ray hits is also a pirate ship
+        //Otherwise the ray cast can hit the cannonballs, and the drawline color turns blue
+        if (leftHit.collider != null && leftHit.collider.GetComponent<PirateShipController>() != null)
+        {
+            cannonLineColor = Color.blue;
+        } 
+        else
+        {
+            cannonLineColor = Color.red;
+
+        }
+        Debug.DrawLine(leftCannon.position, leftCannon.position + leftDirection * drawLineDistance, cannonLineColor);
     }
 
     //Given a target position and the transform of a cannon, aims that cannon at that target

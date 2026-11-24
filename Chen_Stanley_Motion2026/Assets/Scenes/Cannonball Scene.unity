@@ -430,6 +430,7 @@ GameObject:
   - component: {fileID: 1367514240}
   - component: {fileID: 1367514239}
   - component: {fileID: 1367514241}
+  - component: {fileID: 1367514242}
   m_Layer: 0
   m_Name: Pirate Ship Target
   m_TagString: Untagged
@@ -548,6 +549,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.7121212}
   m_Direction: 0
+--- !u!114 &1367514242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367514238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3139b1a6b5c857843ac15f2dd7439ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateShipController
+  scoreboard: {fileID: 1591692927}
 --- !u!1001 &1424021414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,6 +639,7 @@ GameObject:
   - component: {fileID: 1473968260}
   - component: {fileID: 1473968259}
   - component: {fileID: 1473968261}
+  - component: {fileID: 1473968262}
   m_Layer: 0
   m_Name: Pirate Ship Target
   m_TagString: Untagged
@@ -743,6 +758,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.7121212}
   m_Direction: 0
+--- !u!114 &1473968262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473968258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3139b1a6b5c857843ac15f2dd7439ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateShipController
+  scoreboard: {fileID: 1591692927}
 --- !u!1 &1591692922
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,6 +925,8 @@ MonoBehaviour:
   rightCannon: {fileID: 1685397580}
   cannonballPrefab: {fileID: 8214065686384112071, guid: 44074452453c295498f805cf7a408f27, type: 3}
   cannonballForce: 5
+  cannonLineColor: {r: 0, g: 0, b: 0, a: 0}
+  drawLineDistance: 20
 --- !u!4 &1800028000
 Transform:
   m_ObjectHideFlags: 0
@@ -925,6 +955,7 @@ GameObject:
   - component: {fileID: 1934803982}
   - component: {fileID: 1934803981}
   - component: {fileID: 1934803983}
+  - component: {fileID: 1934803984}
   m_Layer: 0
   m_Name: Pirate Ship Target
   m_TagString: Untagged
@@ -1043,6 +1074,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.7121212}
   m_Direction: 0
+--- !u!114 &1934803984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934803980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3139b1a6b5c857843ac15f2dd7439ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PirateShipController
+  scoreboard: {fileID: 1591692927}
 --- !u!1001 &8479125887564426978
 PrefabInstance:
   m_ObjectHideFlags: 0

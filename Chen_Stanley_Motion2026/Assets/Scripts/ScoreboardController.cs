@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,5 +25,7 @@ public class ScoreboardController : MonoBehaviour
             score = value;
             scoreText.text = $"Score: {score}";
         }
-    }
+    }   
+
+
 }
