@@ -15,26 +15,10 @@ public class PlayerController : MonoBehaviour
         left, right
     }
 
-    //Week 11 Jumping Variables
-    public float apexHeight;
-    public float apexTime;
-    float gravity;
-    float initialJumpVelocity;
-    private bool wasJumpTriggered = false; 
-    
-
     // Start is called before the first frame update
     void Start()
     {
         acceleration = maxSpeed / accelerationTime;
-
-        gravity = -2 * apexHeight / (apexTime * apexTime);
-        initialJumpVelocity = 2 * apexHeight / apexTime; 
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     // Update is called once per frame
@@ -53,12 +37,6 @@ public class PlayerController : MonoBehaviour
             playerInput.x -= 1f;
         }
         MovementUpdate(playerInput);
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            wasJumpTriggered = true;
-        }
-
 
     }
 
@@ -79,25 +57,10 @@ public class PlayerController : MonoBehaviour
             //Decelerate/stop moving 
         }
 
-
-        //Jumping
-        Vector2 currentVelocity = playerRB.linearVelocity;
-        //appy the gravity that we calculate over time 
-        currentVelocity.y += gravity * Time.deltaTime;
-
-        //Once the player presses input for jump, they will obtain the velocity into the air
-        //Only jump if player is grounded 
-
-        if (wasJumpTriggered)
-        {
-            currentVelocity.y = initialJumpVelocity;
-            wasJumpTriggered = false;
-        }
-
         playerRB.linearVelocity = newVelocity;
+
     }
 
-    //week 10 horizontal movement
     public bool IsWalking()
     {
         return false;
@@ -111,6 +74,4 @@ public class PlayerController : MonoBehaviour
     {
         return FacingDirection.left;
     }
-
-    //week 11 jumping
 }
