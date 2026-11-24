@@ -17,6 +17,17 @@ public class GunshipController : MonoBehaviour
         //These methods aim the cannons based on where the mouse is in the 2D space
         Vector3 leftDirection = AimCannon(mousePosition, leftCannon);
         Vector3 rightDirection = AimCannon(mousePosition, rightCannon);
+
+        //Activate method at specified location
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            FireCannon(leftCannon);
+        }
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            FireCannon(rightCannon);
+        }
     }
 
     //Given a target position and the transform of a cannon, aims that cannon at that target
@@ -34,5 +45,14 @@ public class GunshipController : MonoBehaviour
 
         //We also then finally return the direction that we want to aim based on the target
         return direction;
+    }
+
+    public void FireCannon(Transform spawnPoint)
+    {
+        GameObject cannonball = Instantiate(cannonballPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        Rigidbody2D rb = cannonball.GetComponent<Rigidbody2D>();
+
+        rb.AddForce(spawnPoint.right * cannonballForce, ForceMode2D.Impulse);
     }
 }
