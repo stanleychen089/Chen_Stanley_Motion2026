@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,8 +14,9 @@ public class PlayerController : MonoBehaviour
 
     //deceleration variables
     private float deceleration;
-    public float decelerationTime; 
-
+    public float decelerationTime;
+    //Facing Direction variable
+    private FacingDirection currentFacingDirection;
 
     public enum FacingDirection
     {
@@ -44,6 +47,9 @@ public class PlayerController : MonoBehaviour
         }
         MovementUpdate(playerInput);
 
+        //debuging
+        Debug.Log("Player's linear velocity" + playerRB.linearVelocity);
+
     }
 
     private void MovementUpdate(Vector2 playerInput)
@@ -63,16 +69,20 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Decelerate/stop moving 
-            //Deceleration for when going left, where deceleration needs to add to velocity.x to return to 0
-            if (newVelocity.x < 0)
-            {
-                newVelocity.x += deceleration * Time.deltaTime;
-            }
-            //deceleration for when going right, where deceleration needs to subtract to velocity.x to return to 0
-            else if (newVelocity.x > 0)
-            {
-                newVelocity.x -= deceleration * Time.deltaTime;
-            }
+            ////Deceleration for when going left, where deceleration needs to add to velocity.x to return to 0
+            //if (newVelocity.x < 0)
+            //{
+            //    newVelocity.x += deceleration * Time.deltaTime;
+            //}
+            ////deceleration for when going right, where deceleration needs to subtract to velocity.x to return to 0
+            //else if (newVelocity.x > 0)
+            //{
+            //    newVelocity.x -= deceleration * Time.deltaTime;
+
+            //New Deceleration logic
+            newVelocity.x = Mathf.MoveTowards(newVelocity.x, 0, deceleration * Time.deltaTime);
+            
+            
         }
 
         //Maximum speed. Restricts movement to max speed. -maxSpeed is for moving left 
@@ -84,7 +94,14 @@ public class PlayerController : MonoBehaviour
 
     public bool IsWalking()
     {
-        return false;
+        if (playerRB.linearVelocity.x == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     public bool IsGrounded()
     {
@@ -93,6 +110,17 @@ public class PlayerController : MonoBehaviour
 
     public FacingDirection GetFacingDirection()
     {
-        return FacingDirection.left;
+        if(playerRB.linearVelocity.x < 0)
+        {
+            currentFacingDirection = FacingDirection.left;
+        } 
+        else if(playerRB.linearVelocity.x > 0)
+        {
+            currentFacingDirection = FacingDirection.right;
+        }
+
+        return currentFacingDirection;
+       
+        
     }
 }
