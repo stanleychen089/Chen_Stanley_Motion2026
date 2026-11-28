@@ -10,6 +10,11 @@ public class PlayerController : MonoBehaviour
     public float accelerationTime;
     private float acceleration; //acceleration = maxSpeed / accelerationTime
 
+    //deceleration variables
+    private float deceleration;
+    public float decelerationTime; 
+
+
     public enum FacingDirection
     {
         left, right
@@ -19,6 +24,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         acceleration = maxSpeed / accelerationTime;
+        deceleration = maxSpeed / decelerationTime; 
     }
 
     // Update is called once per frame
@@ -50,12 +56,27 @@ public class PlayerController : MonoBehaviour
         if(playerInput.x != 0)
         {
             //accelerate
-            newVelocity += playerInput.x * Vector2.right * acceleration * Time.deltaTime;
+            //newVelocity += playerInput.x * Vector2.right * acceleration * Time.deltaTime;
+            newVelocity.x += playerInput.x * acceleration * Time.deltaTime;
+
         }
         else
         {
             //Decelerate/stop moving 
+            //Deceleration for when going left, where deceleration needs to add to velocity.x to return to 0
+            if (newVelocity.x < 0)
+            {
+                newVelocity.x += deceleration * Time.deltaTime;
+            }
+            //deceleration for when going right, where deceleration needs to subtract to velocity.x to return to 0
+            else if (newVelocity.x > 0)
+            {
+                newVelocity.x -= deceleration * Time.deltaTime;
+            }
         }
+
+        //Maximum speed. Restricts movement to max speed. -maxSpeed is for moving left 
+        newVelocity.x = Mathf.Clamp(newVelocity.x, -maxSpeed, maxSpeed);
 
         playerRB.linearVelocity = newVelocity;
 
