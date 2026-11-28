@@ -17,6 +17,12 @@ public class PlayerController : MonoBehaviour
     public float decelerationTime;
     //Facing Direction variable
     private FacingDirection currentFacingDirection;
+    //Raycasting to check for isGrounded
+    private float raycastLengthForGroundCheck;//raycast length = playerlength / 2 + small number
+    public float playerLength;
+    public float raycastSmallNumber;
+    public RaycastHit2D groundHit;
+    public LayerMask groundLayerMask;
 
     public enum FacingDirection
     {
@@ -27,7 +33,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         acceleration = maxSpeed / accelerationTime;
-        deceleration = maxSpeed / decelerationTime; 
+        deceleration = maxSpeed / decelerationTime;
     }
 
     // Update is called once per frame
@@ -48,7 +54,10 @@ public class PlayerController : MonoBehaviour
         MovementUpdate(playerInput);
 
         //debuging
-        Debug.Log("Player's linear velocity" + playerRB.linearVelocity);
+        //Debug.Log("Player's linear velocity" + playerRB.linearVelocity);
+        raycastLengthForGroundCheck = playerLength / 2 + raycastSmallNumber;
+        Debug.DrawRay(transform.position, Vector2.down * raycastLengthForGroundCheck, Color.red);
+        Debug.Log(IsGrounded());
 
     }
 
@@ -105,7 +114,10 @@ public class PlayerController : MonoBehaviour
     }
     public bool IsGrounded()
     {
-        return true;
+        //Raycast to check ifGrounded
+        groundHit = Physics2D.Raycast(transform.position, Vector2.down, raycastLengthForGroundCheck, groundLayerMask);
+
+        return groundHit.collider != null;
     }
 
     public FacingDirection GetFacingDirection()

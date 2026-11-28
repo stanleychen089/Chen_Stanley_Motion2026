@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 1054579210}
   - component: {fileID: 1054579209}
   - component: {fileID: 1054579211}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1713,6 +1713,11 @@ MonoBehaviour:
   playerRB: {fileID: 1433354317}
   accelerationTime: 0.3
   decelerationTime: 0.2
+  playerLength: 1.3
+  raycastSmallNumber: 0.001
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &1433354315
 Transform:
   m_ObjectHideFlags: 0
